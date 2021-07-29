@@ -8,7 +8,7 @@ class SetorController:
 
     def addSetor(self, nome, idAla):
         novoSetor = Setor(nome=nome)
-        novoSetor.ala_id = idAla
+        novoSetor.alaId = idAla
         session.add(novoSetor)
         session.commit()
 
@@ -17,7 +17,7 @@ class SetorController:
         return setor
 
     def getSetoresAla(self, idAla):
-        setores = session.query(Setor).filter(Setor.ala_id == idAla).all()
+        setores = session.query(Setor).filter(Setor.alaId == idAla).all()
         return setores
 
 
