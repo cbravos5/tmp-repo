@@ -86,7 +86,7 @@ Ao rodar <code>make create-tables</code> as tabelas devem ser criadas e uma mens
 
 ```bash
 export ENV='commit'
-python3.9 ./src/repo
+python3.9 ./src/database/repo.py
 export ENV='desenv'
 ```
 O comando acima seta uma variável de ambiente, que indica se as tabelas devem ser commitadas ou não. Após rodar o arquivo do repositório a variável deve ser alterada.
