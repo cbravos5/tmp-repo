@@ -1,24 +1,17 @@
 from database.repo import *
+from app.controllers.AlaController import alaController
 
 
 class SetorController:
-    def index(self):
-        setores = session.query(Setor).all()
-        return setores
-
-    def addSetor(self, nome, idAla):
-        novoSetor = Setor(nome=nome)
-        novoSetor.alaId = idAla
+    def criarSetor(self, nomeSetor, idAla):
+        ala = alaController.buscarAla(idAla)
+        novoSetor = Setor(nomeSetor, ala)
         session.add(novoSetor)
         session.commit()
 
-    def getSetor(self, id):
-        setor = session.query(Setor).get(id)
+    def buscarSetor(self, idSetor):
+        setor = session.query(Setor).get(idSetor)
         return setor
-
-    def getSetoresAla(self, idAla):
-        setores = session.query(Setor).filter(Setor.alaId == idAla).all()
-        return setores
 
 
 setorController = SetorController()

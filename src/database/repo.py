@@ -48,6 +48,8 @@ class TipoLeito(Base):
     # relations
     leitos = relationship("Leito", back_populates="tipo")
     unidades = relationship("Unidade", back_populates="tipo")
+    solicitacoesLeito = relationship(
+        "SolicitacaoLeito", back_populates="tipo")
 
     def __init__(self, tipo):
         self.tipo = tipo
@@ -63,9 +65,12 @@ class Leito(Base):
     tipo = relationship("TipoLeito", back_populates="leitos")
     internacao = relationship(
         "Internacao", back_populates="leito", uselist=False)
+    unidadeId = Column(Integer, ForeignKey('unidades.id'))
+    unidade = relationship("Unidade", back_populates="leitos")
 
-    def __init__(self, tipo):
+    def __init__(self, tipo, unidade):
         self.tipo = tipo
+        self.unidade = unidade
 
 
 class Unidade(Base):
@@ -78,8 +83,8 @@ class Unidade(Base):
     tipo = relationship("TipoLeito", back_populates="unidades")
     setorId = Column(Integer, ForeignKey('setores.id'))
     setor = relationship("Setor", back_populates="unidades")
-    solicitacoes = relationship("Solicitacao", back_populates="unidade")
     equipesMedicas = relationship("EquipeMedica", back_populates="unidade")
+    leitos = relationship("Leito", back_populates="unidade")
 
     def __init__(self, andar, tipo, setor):
         self.andar = andar
@@ -127,26 +132,27 @@ class Urgencia(Base):
     id = Column(Integer, primary_key=True)
     urgencia = Column(String, nullable=False)
     # relations
-    solicitacoes = relationship("Solicitacao", back_populates="urgencia")
+    solicitacoesLeito = relationship(
+        "SolicitacaoLeito", back_populates="urgencia")
 
     def __init__(self, urgencia):
         self.urgencia = urgencia
 
 
-class Solicitacao(Base):
-    __tablename__ = 'solicitacoes'
+class SolicitacaoLeito(Base):
+    __tablename__ = 'solicitacoes_leito'
 
     id = Column(Integer, primary_key=True)
     # relations
     urgenciaId = Column(Integer, ForeignKey('urgencias.id'))
-    urgencia = relationship("Urgencia", back_populates="solicitacoes")
-    unidadeId = Column(Integer, ForeignKey('unidades.id'))
-    unidade = relationship("Unidade", back_populates="solicitacoes")
+    urgencia = relationship("Urgencia", back_populates="solicitacoesLeito")
+    tipoId = Column(Integer, ForeignKey('tipos_leito.id'))
+    tipo = relationship("TipoLeito", back_populates="solicitacoesLeito")
     paciente = relationship(
-        "Paciente", back_populates="solicitacao", uselist=False)
+        "Paciente", back_populates="solicitacaoLeito", uselist=False)
 
-    def __init__(self, unidade, urgencia):
-        self.unidade = unidade
+    def __init__(self, tipo, urgencia):
+        self.tipo = tipo
         self.urgencia = urgencia
 
 
@@ -160,8 +166,9 @@ class Paciente(Base):
     # relations
     internacaoId = Column(Integer, ForeignKey('internacoes.id'))
     internacao = relationship("Internacao", back_populates="paciente")
-    solicitacaoId = Column(Integer, ForeignKey('solicitacoes.id'))
-    solicitacao = relationship("Solicitacao", back_populates="paciente")
+    solicitacaoLeitoId = Column(Integer, ForeignKey('solicitacoes_leito.id'))
+    solicitacaoLeito = relationship(
+        "SolicitacaoLeito", back_populates="paciente")
 
     def __init__(self, nome, cpf, contato):
         self.nome = nome
@@ -202,11 +209,9 @@ class EquipeMedica(Base):
     unidade = relationship("Unidade", back_populates="equipesMedicas")
     turno = relationship("Turno", back_populates="equipeMedica", uselist=False)
 
-    def __init__(self, nome, chefia, unidade, turno):
+    def __init__(self, nome, chefia):
         self.nome = nome
         self.chefia = chefia
-        self.unidade = unidade
-        self.turno = turno
 
 
 class Turno(Base):
