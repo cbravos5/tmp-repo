@@ -1,3 +1,5 @@
+import sys
+sys.path.append("/home/cbravos/UFPR/DS/src/")
 from database.repo import *
 from app.controllers.SetorController import setorController
 
@@ -13,6 +15,23 @@ class UnidadeController:
         unidade = Unidade(andar, tipo, setor)
         session.add(unidade)
         session.commit()
+        return unidade
+
+    def buscarTodasUnidadesSetor(self, idSetor):
+        unidades = session.query(Unidade).filter(Unidade.setorId == idSetor).all()
+        return unidades
+
+    def printUnidade(self, unidade):
+        print("==Unidade==")
+        print(f'ID {unidade.id}')
+        print(f'Andar {unidade.andar}')
+        print(f'Tipo {unidade.tipo.tipo}')
+        print(f'ID Setor {unidade.setorId}')
+
+    def printUnidadesSetor(self, idSetor):
+        unidades = self.buscarTodasUnidadesSetor(int(idSetor))
+        for i in unidades:
+            self.printUnidade(i)
 
 
 unidadeController = UnidadeController()

@@ -1,3 +1,5 @@
+import sys
+sys.path.append("/home/cbravos/UFPR/DS/src/")
 from database.repo import *
 from app.controllers.PacienteController import pacienteController
 
@@ -11,6 +13,7 @@ class SolicitacaoLeitoController:
         pacienteController.associarPacienteSolicitacao(paciente, solLeito)
         session.add(solLeito)
         session.commit()
+        return solLeito
 
 
 solicitacaoLeitoController = SolicitacaoLeitoController()

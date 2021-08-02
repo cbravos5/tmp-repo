@@ -189,13 +189,12 @@ class Funcionario(Base):
     equipeMedicaId = Column(Integer, ForeignKey('equipes_medicas.id'))
     equipeMedica = relationship("EquipeMedica", back_populates="funcionarios")
 
-    def __init__(self, nome, cpf, contato, cargo, setorTrabalho):
+    def __init__(self, nome, cpf, contato, cargo):
         self.nome = nome
         self.cpf = cpf
         self.contato = contato
         self.cargo = cargo
-        self.setorTrabalho = setorTrabalho
-
+        self.setorTrabalho = 'Setor Geral'
 
 class EquipeMedica(Base):
     __tablename__ = 'equipes_medicas'

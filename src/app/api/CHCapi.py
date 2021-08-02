@@ -14,11 +14,10 @@ class CHCapi:
                 data.append(row)
         return data
 
-    def buscarPaciente(self, idPaciente):
-        id = str(idPaciente)
+    def buscarPaciente(self, cpfPaciente):
         pacienteAlvo = []
         for paciente in self.pacientes:
-            if(paciente[0] == id):
+            if(paciente[2] == cpfPaciente):
                 pacienteAlvo = paciente
                 break
         return pacienteAlvo

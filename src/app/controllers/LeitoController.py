@@ -1,3 +1,5 @@
+import sys
+sys.path.append("/home/cbravos/UFPR/DS/src/")
 from database.repo import *
 import app.controllers.UnidadeController as UnidadeController
 
@@ -40,5 +42,21 @@ class LeitoController:
             leito.unidade = unidade
         session.commit()
 
+    def getTiposLeito(self):
+        tiposLeito = session.query(TipoLeito).all()
+        return tiposLeito
+
+    def printTiposLeito(self):
+        tipoLeitos = self.getTiposLeito()
+        for i in tipoLeitos:
+            print(f'ID {i.id} Tipo {i.tipo}')
+
+    def printLeito(self, leito):
+        print("==Leito==")
+        print(f'ID {leito.id}')
+        print(f'Disponibilidade {leito.disponibilidade}')
+        print(f'Tipo {leito.tipo.tipo}')
+        print(f'Unidade ID {leito.unidade.id}')
+        print("=========")
 
 leitoController = LeitoController()

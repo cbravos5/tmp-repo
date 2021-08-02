@@ -1,2 +1,10 @@
-from database.repo import *
+from app.controllers.AlaController import alaController
+from app.controllers.EquipeMedicaController import equipeMedicaController
+from app.controllers.FuncionarioController import funcionarioController
+from app.controllers.InternacaoController import internacaoController
+from app.controllers.LeitoController import leitoController
 from app.controllers.PacienteController import pacienteController
+from app.controllers.SetorController import setorController
+from app.controllers.SolicitacaoLeitoController import solicitacaoLeitoController
+from app.controllers.UnidadeController import unidadeController
+

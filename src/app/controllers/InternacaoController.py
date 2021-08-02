@@ -22,6 +22,7 @@ class InternacaoController:
         action = AcaoRecomendada(recomendacao, inter)
         session.add(action)
         session.commit()
+        return action
 
     def encerrarInternacao(self, internacao, motivo):
         self.setStatus(internacao, 'encerrada')
