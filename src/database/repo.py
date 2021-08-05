@@ -152,8 +152,8 @@ class SolicitacaoLeito(Base):
         "Paciente", back_populates="solicitacaoLeito", uselist=False)
 
     def __init__(self, tipo, urgencia):
-        self.tipo = tipo
-        self.urgencia = urgencia
+        self.tipoId = tipo
+        self.urgenciaId = urgencia
 
 
 class Paciente(Base):
@@ -217,8 +217,8 @@ class Turno(Base):
     __tablename__ = 'turnos'
 
     id = Column(Integer, primary_key=True)
-    horaInicio = Column(Date)
-    horaTermino = Column(Date)
+    horaInicio = Column(String)
+    horaTermino = Column(String)
     escala = Column(String)
     # relations
     equipeMedicaId = Column(Integer, ForeignKey('equipes_medicas.id'))

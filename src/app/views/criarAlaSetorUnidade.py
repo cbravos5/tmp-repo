@@ -1,5 +1,6 @@
-import sys
-sys.path.append("/home/cbravos/UFPR/DS/src/")
+import pathlib
+import sys, os
+sys.path.append(f'{pathlib.Path().resolve()}/src/')
 from app.controllers.AlaController import alaController
 from app.controllers.SetorController import setorController
 from app.controllers.UnidadeController import unidadeController
@@ -17,6 +18,7 @@ def criarAlaSetorUnidade():
         print("Insira o id da Ala")
         alaController.printAlas()
         idAla = input()
+        os.system('clear')
         print("Insira o nome do Setor")
         nome = input()
         setorController.criarSetor(nome, int(idAla))
@@ -25,15 +27,16 @@ def criarAlaSetorUnidade():
         print("Insira o id da Ala")
         alaController.printAlas()
         idAla = input()
+        os.system('clear')
         print("Insira o id do Setor")
         setorController.printSetoresAla(int(idAla))
         idSetor = input()
+        os.system('clear')
         print("Insira o id do Tipo")
         leitoController.printTiposLeito()
         idTipo = input()
+        os.system('clear')
         print("Insira o andar")
         andar = input()
         unidadeController.criarUnidade(int(idTipo), int(idSetor), int(andar))
         print(f'Unidade tipo id {idTipo} criada no setor id {idSetor} no andar {andar}')
-
-criarAlaSetorUnidade()

@@ -1,5 +1,6 @@
+import pathlib
 import sys
-sys.path.append("/home/cbravos/UFPR/DS/src/")
+sys.path.append(f'{pathlib.Path().resolve()}/src/')
 from database.repo import *
 
 class FuncionarioController:
@@ -15,6 +16,18 @@ class FuncionarioController:
 
     def associarFuncionarioEquipe(self, funcionario, eqMed):
         funcionario.equipeMedica = eqMed
+
+    def printFuncionarios(self):
+        funcionarios = session.query(Funcionario).all()
+        for i in funcionarios:
+            self.printFuncionario(i)
+
+    def printFuncionario(self, funcionario):
+        print("===Funcionário===")
+        print(f'ID {funcionario.id}')
+        print(f'Nome: {funcionario.nome}')
+        print(f'CPF {funcionario.cpf}')
+        print(f'Cargo: {funcionario.cargo}')
 
 
 funcionarioController = FuncionarioController()

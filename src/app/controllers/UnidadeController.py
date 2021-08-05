@@ -1,5 +1,6 @@
+import pathlib
 import sys
-sys.path.append("/home/cbravos/UFPR/DS/src/")
+sys.path.append(f'{pathlib.Path().resolve()}/src/')
 from database.repo import *
 from app.controllers.SetorController import setorController
 

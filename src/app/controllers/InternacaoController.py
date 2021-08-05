@@ -1,3 +1,6 @@
+import pathlib
+import sys
+sys.path.append(f'{pathlib.Path().resolve()}/src/')
 from database.repo import *
 import app.controllers.LeitoController as LeitoController
 import app.controllers.PacienteController as PacienteController

@@ -1,14 +1,12 @@
 import pathlib
-import sys, os
+import sys, os, time
 sys.path.append(f'{pathlib.Path().resolve()}/src/')
 from app.controllers.AlaController import alaController
 from app.controllers.SetorController import setorController
 from app.controllers.UnidadeController import unidadeController
 from app.controllers.LeitoController import leitoController
-from app.controllers.PacienteController import pacienteController
-from app.controllers.InternacaoController import internacaoController
 
-def alterarEstadoPaciente():
+def consultarMapaLeitos():
     print("Insira o id da Ala:")
     alaController.printAlas()
     idAla = input()
@@ -21,18 +19,6 @@ def alterarEstadoPaciente():
     unidadeController.printUnidadesSetor(int(idSetor))
     idUnidade = input()
     os.system('clear')
-    print("Insira o id do Leito a alterar:")
+    print(f'Leitos da unidade {int(idUnidade)}')
     leitoController.printLeitosUnidade(int(idUnidade))
-    idLeito = input()
-    os.system('clear')
-    leito = leitoController.buscarLeito(int(idLeito))
-    if(leito.internacao):
-        pacienteController.printPaciente(leito.internacao.paciente)
-
-        print("Insira o novo estado:")
-        estado = input()
-        os.system('clear')
-        internacaoController.alterarStatusPaciente(int(idLeito), estado)
-        print("Estado alterado")
-    else:
-        print("Não há paciente nesse leito")
+    input("Aperta qualquer tecla para sair")

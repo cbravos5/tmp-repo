@@ -1,5 +1,6 @@
+import pathlib
 import sys
-sys.path.append("/home/cbravos/UFPR/DS/src/")
+sys.path.append(f'{pathlib.Path().resolve()}/src/')
 from database.repo import *
 import app.controllers.FuncionarioController as FuncionarioController
 import app.controllers.UnidadeController as UnidadeController
@@ -12,7 +13,7 @@ class EquipeMedicaController:
         for funcionarioId in listaFuncionarios:
             funcionario = FuncionarioController.funcionarioController.buscaFuncionario(
                 funcionarioId)
-            UnidadeController.funcionarioController.associarFuncionarioEquipe(
+            FuncionarioController.funcionarioController.associarFuncionarioEquipe(
                 funcionario, eqMed)
         session.add(eqMed)
         session.commit()
@@ -36,8 +37,13 @@ class EquipeMedicaController:
         print(f'Nome: {equipe.nome}')
         print(f'Chefia: {equipe.chefia}')
         print(f'ID Unidade {equipe.unidadeId}')
-        print(f'Turno {equipe.turno.horaInicio} às {equipe.turno.horaTermino}')
-        print(f'Escala: {equipe.turno.escala}')
+        if(equipe.turno):
+            print(f'Turno {equipe.turno.horaInicio} às {equipe.turno.horaTermino}')
+            print(f'Escala: {equipe.turno.escala}')
+
+    def buscarEquipesPorUnidade(self, idUnidade):
+        equipes = session.query(EquipeMedica).filter(EquipeMedica.unidadeId == idUnidade).all()
+        return equipes
 
     def printTodasEquipes(self):
         equipes = session.query(EquipeMedica).all()

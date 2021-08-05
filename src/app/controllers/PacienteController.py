@@ -1,5 +1,6 @@
+import pathlib
 import sys
-sys.path.append("/home/cbravos/UFPR/DS/src/")
+sys.path.append(f'{pathlib.Path().resolve()}/src/')
 import app.controllers.InternacaoController as InternacaoController
 from database.repo import *
 from app.api.CHCapi import api
@@ -7,7 +8,7 @@ from app.api.CHCapi import api
 class PacienteController:
     def entrarPaciente(self, cpf):
         info = api.buscarPaciente(cpf)
-        paciente = Paciente(info[0], info[1], info[2])
+        paciente = Paciente(info[1], info[2], info[3])
         session.add(paciente)
         session.commit()
         return paciente
@@ -22,7 +23,7 @@ class PacienteController:
         paciente = session.query(Paciente).get(idPaciente)
         return paciente
 
-    def associarPacienteLeito(self, paciente, solLeito):
+    def associarPacienteSolLeito(self, paciente, solLeito):
         paciente.solicitacaoLeito = solLeito
 
     def associarPacienteInternacao(self, paciente, inter):
@@ -30,6 +31,7 @@ class PacienteController:
 
     def removerSolicitacao(self, paciente):
         id = paciente.solicitacaoLeito.id
+        paciente.solicitacaoLeito = None
         session.query(SolicitacaoLeito).filter(SolicitacaoLeito.id == id).delete(
             synchronize_session='evaluate')
 

@@ -1,5 +1,6 @@
+import pathlib
 import sys
-sys.path.append("/home/cbravos/UFPR/DS/src/")
+sys.path.append(f'{pathlib.Path().resolve()}/src/')
 from database.repo import *
 import app.controllers.UnidadeController as UnidadeController
 
@@ -58,5 +59,10 @@ class LeitoController:
         print(f'Tipo {leito.tipo.tipo}')
         print(f'Unidade ID {leito.unidade.id}')
         print("=========")
+
+    def printLeitosUnidade(self, idUnidade):
+        leitos = self.consultarLeitos(idUnidade)
+        for i in leitos:
+            leitoController.printLeito(i)
 
 leitoController = LeitoController()
